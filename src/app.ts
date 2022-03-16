@@ -1,9 +1,6 @@
-import { Task, Category } from "./types/types";
+import { Task, Category } from "./types/types.js";
 import {render} from "./helpers/render-tasks-helper.js"
 import {renderCategories} from "./helpers/render-categories-helper.js"
-
-
-
 
 let selectedCategory: Category;
 
@@ -14,9 +11,9 @@ const tasks: Task[] =
     done:true},
     {name:"Pobiegać",
     done:false,
-    category:"work"}]
+    category:Category.WORK}]
 
-    const categories: Category[] = ["general","work","gym","hobby"]
+    const categories: Category[] = [Category.GENERAL,Category.WORK,Category.GYM,Category.HOBBY,Category.SOCIAL]
 
 const taskNameInputElement: HTMLInputElement = document.querySelector("#name")
 const taskContainerElement: HTMLElement = document.querySelector(".tasks")
@@ -29,6 +26,10 @@ const addTask = (task:Task) =>{
     
 }
 
+const updateSelectedCategory = (newCategory: Category) => {
+    selectedCategory = newCategory
+}
+
 addButtonElement.addEventListener("click",(e)=>{
 e.preventDefault()
 
@@ -37,8 +38,8 @@ e.preventDefault()
 
 
 addTask({name:taskNameInputElement.value,category:selectedCategory,done:false})
-render(tasks,taskContainerElement)    
+render(tasks,taskContainerElement)   
 })
 
-renderCategories(categories,categoriesContainerElement,selectedCategory)
+renderCategories(categories,categoriesContainerElement,updateSelectedCategory)
 render(tasks,taskContainerElement)
